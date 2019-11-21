@@ -34,10 +34,15 @@ float Q_rsqrt( float number )
 }
 
 float Q_reciprocal( float number ){
+	
+	unsigned int s = (*(unsigned int*)&number) & 0x80000000;
+	unsigned int  t = ((*(unsigned int *)&number) & 0x7fffffff);
+	number = *(float *)&t;
+	
+	
 	long i;
 	float x2, y;
-	const float threehalfs = 1.5F;
- 
+	const float threehalfs = 1.5F; 
 	x2 = number * 0.5F;
 	y  = number;
 	i  = * ( long * ) &y;                       // evil floating point bit level hacking（对浮点数的邪恶位级hack）
@@ -45,8 +50,12 @@ float Q_reciprocal( float number ){
 	y  = * ( float * ) &i;
 	y  = y * ( threehalfs - ( x2 * y * y ) );   // 1st iteration （第一次牛顿迭代）
     // y  = y * ( threehalfs - ( x2 * y * y ) );   // 2nd iteration, this can be removed（第二次迭代，可以删除）
- 
-	return y*y;
+	y = y*y;
+	
+	t = (*(unsigned*)&y) | s;
+	y = *(float *)&t;	
+	
+	return y;
 
 }
 

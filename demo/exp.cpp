@@ -44,7 +44,7 @@ void test_exp2()
     for (size_t i = 0; i < 10000; i++)
     {
         float x = i * 0.001;
-        float _y = fastExp3(x);
+        float _y = fastExp4(x);
         float y_gt = exp(x);
         float diff = (_y - y_gt) / y_gt;
         diff_sum += abs(diff);

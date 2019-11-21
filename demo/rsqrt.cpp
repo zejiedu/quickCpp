@@ -42,7 +42,7 @@ void test_reciprocal()
     int count = 6400000;
     for (float i = 1; i <= count; i++)
     {
-        float x = i * 0.001;
+        float x = -i * 0.001;
         float _y = Q_reciprocal(x);
         float y_gt = 1 / (x);
         float diff = (_y - y_gt) / y_gt;
